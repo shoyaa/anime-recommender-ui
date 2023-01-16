@@ -6,7 +6,8 @@ import {
 import CheckboxBtn from "./CheckboxBtn";
 import { AnimatePresence, motion } from "framer-motion";
 import SkeletonLoader from "./SkeletonLoader";
-import CategoryResults from "./CategoryResults";
+
+import Router, { useRouter } from "next/router";
 
 const FilterByCategory = ({ anime }: any) => {
   type categoryProps = {
@@ -20,11 +21,12 @@ const FilterByCategory = ({ anime }: any) => {
   const [included, setIncluded] = useState<any>([]);
   const [excluded, setExcluded] = useState<any>([]);
   const [data, setData] = useState<any>([]);
+  const [query, setQuery] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const myRef = useRef<null | HTMLDivElement>(null);
-  const executeScroll = () =>
-    myRef.current?.scrollIntoView({ behavior: "smooth" });
+  const [results, setResults] = useState<boolean>(false);
+  const router = useRouter();
   useEffect(() => {
     setFilteredAnime(
       anime.map((v: categoryProps) => ({
@@ -58,48 +60,36 @@ const FilterByCategory = ({ anime }: any) => {
   }, [filteredAnime]);
 
   const handleSubmit = () => {
-    fetchData(included, excluded, 1);
-    executeScroll();
+    setQuery("");
+    router.push(
+      `category/include=${included}&exclude=${excluded}&page=1${query}`
+    );
+    // fetchData(included, excluded, 1, query);
   };
-  const fetchData = async (
+  /* const fetchData = async (
     included: string,
     excluded: string,
-    page: number
+    page: number,
+    query: string
   ) => {
-    if (included.length > 0 && excluded.length > 0) {
+    if (included.length > 0 || excluded.length > 0) {
       setLoading(true);
       const req = await fetch(
-        `http://193.123.33.166/genre-recommendation?include=${included}&exclude=${excluded}&page=${page}`
+        `http://193.123.33.166/genre-recommendation?include=${included}&exclude=${excluded}&page=${page}${query}`
       );
+      console.log(req);
       const newData = await req.json();
       setLoading(false);
-      return setData(newData);
-    }
-    if (included.length > 0 && excluded.length === 0) {
-      setLoading(true);
-      const req = await fetch(
-        `http://193.123.33.166/genre-recommendation?include=${included}&exclude&page=${page}`
-      );
-      const newData = await req.json();
-      setLoading(false);
-      return setData(newData);
-    }
-    if (included.length === 0 && excluded.length > 0) {
-      setLoading(true);
-      const req = await fetch(
-        `http://193.123.33.166/genre-recommendation?include&exclude=${excluded}&page=${page}`
-      );
-      const newData = await req.json();
-      setLoading(false);
+      setResults(true);
+    
       return setData(newData);
     } else return;
   };
-
+*/
   return (
     <motion.div
       initial={{ y: 10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -10, opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
       <div className="mx-auto max-w-4xl pt-5">
@@ -162,7 +152,7 @@ const FilterByCategory = ({ anime }: any) => {
                     },
                   },
                 }}
-                className="grid grid-cols-5 gap-3"
+                className="grid grid-cols-5 gap-3 mt-3"
               >
                 {filteredAnime.slice(20).map((item: any) => {
                   return (
@@ -193,17 +183,6 @@ const FilterByCategory = ({ anime }: any) => {
               {" "}
               Search
             </button>
-          </div>
-          <h3 className="text-xl font-bold mt-20 mb-5">Matched Results</h3>
-          <div ref={myRef} className="w-full flex justify-center">
-            <CategoryResults
-              fetchData={fetchData}
-              included={included}
-              excluded={excluded}
-              setData={setData}
-              data={data}
-              loading={loading}
-            />
           </div>
         </div>
       </div>
