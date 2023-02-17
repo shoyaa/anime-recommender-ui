@@ -1,79 +1,72 @@
-import React, { useState } from "react";
-import { isTemplateExpression } from "typescript";
+import React, { useState, useEffect } from "react";
 type checkBoxProps = {
   item: any;
-  setFilteredAnime: any;
-
-  filteredAnime: any;
+  onCheckboxChange: any;
+  value: any;
+  checkboxState: any;
 };
 const CheckboxBtn = ({
   item,
-  setFilteredAnime,
-  filteredAnime,
+  onCheckboxChange,
+  value,
+  checkboxState,
 }: checkBoxProps) => {
-  const [status, setStatus] = useState<string>("neutral");
-  const [buttonStyle, setButtonStyle] = useState<string>(" bg-gray-200 border");
+  const [buttonStyle, setButtonStyle] = useState<string>("");
 
-  const handleClick = (id: number) => {
-    switch (status) {
+  function handleCheck() {
+    switch (checkboxState) {
       case "neutral":
-        console.log("neutral");
-        setStatus("included");
-        setButtonStyle(" bg-black text-white border-transparent border");
-        const includedData = [...filteredAnime].map((item: any) => {
-          if (item.mal_id === id) {
-            return {
-              ...item,
-              status: "included",
-            };
-          }
-          return item;
-        });
-        setFilteredAnime(includedData);
+        // setButtonState("included");
+        onCheckboxChange(value, "included");
+        setButtonStyle(" text-green-700");
         break;
-
       case "included":
-        console.log("included oldu");
-        setStatus("excluded");
-        setButtonStyle(" bg-gray-200 border border-transparent text-gray-400");
-        const excludedData = [...filteredAnime].map((item: any) => {
-          if (item.mal_id === id) {
-            return {
-              ...item,
-              status: "excluded",
-            };
-          }
-          return item;
-        });
-        setFilteredAnime(excludedData);
+        // setButtonState("excluded");
+        onCheckboxChange(value, "excluded");
+        setButtonStyle(" text-red-700");
         break;
       case "excluded":
-        console.log("neutral oldu");
-        setStatus("neutral");
-        setButtonStyle(" bg-gray-200 border border-transparent");
-
-        const neutralData = [...filteredAnime].map((item: any) => {
-          if (item.mal_id === id) {
-            return {
-              ...item,
-              status: "neutral",
-            };
-          }
-          return item;
-        });
-        setFilteredAnime(neutralData);
+        // setButtonState("neutral");
+        onCheckboxChange(value, "neutral");
+        setButtonStyle(" ");
+        break;
+      default:
         break;
     }
-  };
+  }
+
+  useEffect(() => {
+    switch (item.state) {
+      case "neutral":
+        // setButtonState("included");
+
+        break;
+      case "included":
+        // setButtonState("excluded");
+        onCheckboxChange(value, "included");
+        setButtonStyle(" text-green-700");
+        break;
+      case "excluded":
+        // setButtonState("neutral");
+        onCheckboxChange(value, "excluded");
+        setButtonStyle("text-red-700");
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   return (
-    <div
-      key={item.id}
-      onClick={() => {
-        handleClick(item.mal_id);
-      }}
-      className={`${buttonStyle}  rounded-full px-3 cursor-pointer select-none transition-all duration-300 ease-out`}
-    >
+    <div className="flex items-center gap-x-2">
+      <input
+        type="checkbox"
+        key={item.id}
+        onChange={() => {
+          handleCheck();
+        }}
+        className={`${buttonStyle} focus:ring-gray-400   rounded-full px-3 cursor-pointer select-none transition-all duration-300 ease-out`}
+        checked={checkboxState !== "neutral"}
+      />
       {item.name}
     </div>
   );
