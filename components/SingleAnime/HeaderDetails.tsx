@@ -4,8 +4,8 @@ import React from "react";
 
 const HeaderDetails = ({ animeData }: any) => {
   return (
-    <div className="md:mx-5 lg:mx-10 2xl:mx-12 flex h-[18rem] items-center  lg:mt-12 lg:flex  relative">
-      <div className="h-[5rem] sm:h-[10rem] sm:min-w-[10rem] md:h-[15rem] lg:h-[20rem] md:min-w-[10rem]  lg:w-[13rem] min-w-[6rem] lg:min-w-[13rem] bg-blue-300 relative rounded-md">
+    <div className="md:mx-5 lg:mx-10 2xl:mx-12 flex h-[18rem] items-center  lg:mt-12 lg:flex  relative px-5 md:px-0">
+      <div className="pl-10 relative h-[5rem] sm:h-[10rem] sm:min-w-[10rem] md:h-[15rem] lg:h-[20rem] md:min-w-[10rem]  lg:w-[13rem] min-w-[6rem] lg:min-w-[13rem] bg-blue-300  rounded-md">
         <Image
           src={animeData.data.images.jpg.large_image_url}
           alt={animeData.data.title}

@@ -1,37 +1,25 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
-import Navbar from "../../components/Navbar/Navbar";
 import Head from "next/head";
 import Layout from "../../components/Layout";
 import AnimeCard from "../../components/AnimeCard";
-import AdvancedFilter from "../../components/AdvancedFilter/AdvancedFilter";
 import SkeletonLoader from "../../components/SkeletonLoader";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import { stringToNum } from "../../lib/stringToNum";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-
-import {
-  removeExcluded,
-  removeIncluded,
-  selectGenreList,
-  setGenreList,
-} from "../../features/filters/FilterSlice";
 import FilterContainer from "../../components/FilterNew/FilterContainer";
 import { getAnimeRecommendation } from "../../lib/getAnimeRecommendation";
 import { getAnimeGenres } from "../../lib/getAnimeGenres";
-
-const Category = ({ anime, genres }: any) => {
+import { genres } from "../../lib/constants/genres";
+const Category = ({ anime, genreList }: any) => {
   const [loading, setLoading] = useState(true);
 
   //Skeleton Loading Effect
   useEffect(() => {
     setLoading(true);
-    if (genres) {
+    if (genreList) {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
     }
-  }, [genres]);
+  }, [genreList]);
 
   return (
     <>
@@ -40,7 +28,7 @@ const Category = ({ anime, genres }: any) => {
       </Head>
       <Layout>
         <div className=" w-full px-10 mx-auto pt-5 min-h-screen">
-          <FilterContainer genres={genres} />
+          <FilterContainer genres={genreList} />
           <h1 className="font-bold  text-lg">FILTER RESULTS</h1>
 
           <div className="mt-5">
@@ -51,13 +39,14 @@ const Category = ({ anime, genres }: any) => {
                 })
               ) : anime?.data.length ? (
                 anime.data.map((anime: any) => {
+                  const genres = anime.genres.map((genre: any) => genre.name);
                   return (
                     <AnimeCard
                       key={anime.mal_id}
                       title={anime.title}
                       image={anime.images.jpg.large_image_url}
                       members={anime.members}
-                      genres={anime.genres}
+                      genres={genres}
                       synopsis={anime.synopsis}
                       status={anime.status}
                       episodes={anime.episodes}
@@ -81,9 +70,8 @@ const Category = ({ anime, genres }: any) => {
 export default Category;
 
 export async function getServerSideProps(context: any) {
-  const { recommendationData, query } = await getAnimeRecommendation(context);
+  const recommendationData = await getAnimeRecommendation(context);
 
-  const genreData = await getAnimeGenres();
   const search = context.query.query;
   const searchParams = new Proxy(new URLSearchParams(search), {
     get: (params: any, prop: string) => params.get(prop),
@@ -92,7 +80,7 @@ export async function getServerSideProps(context: any) {
   const exclude = searchParams.exclude;
 
   //Check if there is included or excluded genres exist in the url. If it exists change their status.
-  const genreFiltered = genreData.map((item: any) => {
+  const genreFiltered = genres.map((item: any) => {
     if (stringToNum(include).includes(item.mal_id)) {
       return { ...item, state: "included" };
     }
@@ -105,7 +93,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       anime: recommendationData,
-      genres: genreFiltered,
+      genreList: genreFiltered,
     }, // will be passed to the page component as props
   };
 }

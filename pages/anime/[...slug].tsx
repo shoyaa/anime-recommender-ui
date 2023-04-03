@@ -1,10 +1,7 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import React, { useEffect } from "react";
 import Layout from "../../components/Layout";
-import Image from "next/image";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
-import { CalculateDays } from "../../lib/calculateNextEpisode";
 import { slugify } from "../../lib/slugify";
 import { sortByFavorites } from "../../lib/SortArray";
 import DetailsSidebar from "../../components/SingleAnime/DetailsSidebar";
@@ -16,22 +13,27 @@ import HeaderDetails from "../../components/SingleAnime/HeaderDetails";
 import EpisodeCountdown from "../../components/SingleAnime/EpisodeCountdown";
 import SynopsisDetails from "../../components/SingleAnime/SynopsisDetails";
 import BannerDetails from "../../components/SingleAnime/BannerDetails";
+import fetcher from "../../lib/fetcher";
 const SingleAnime = ({
-  animeData,
+  fallbackAnimeData,
   mappedGenre,
-  characters,
+  fallbackAnimeCharacters,
   calendar,
-  recommendations,
+  fallbackRecommendationData,
   params,
 }: any) => {
   const selectedDate = calendar.filter(
-    (item: any) => item.route === slugify(animeData.data.title)
+    (item: any) => item.route === slugify(fallbackAnimeData.data.title)
   );
   const router = useRouter();
   useEffect(() => {
+    //If anime title does not exist on the url. Add it to url.
+
     if (params.slug.length <= 1) {
       router.push(
-        `/anime/${animeData.data.mal_id}/${slugify(animeData.data.title)}`,
+        `/anime/${fallbackAnimeData.data.mal_id}/${slugify(
+          fallbackAnimeData.data.title
+        )}`,
         undefined,
         { shallow: true }
       );
@@ -43,27 +45,29 @@ const SingleAnime = ({
       <Head>
         <title>Single Anime | Anime Recommender</title>
       </Head>
-      <Layout data={mappedGenre}>
+      <Layout>
         <div className="max-w-full  min-h-screen relative">
-          <BannerDetails animeData={animeData} />
+          <BannerDetails animeData={fallbackAnimeData} />
           <div className="">
-            <HeaderDetails animeData={animeData} />
+            <HeaderDetails animeData={fallbackAnimeData} />
             <div className="lg:mt-10 lg:flex">
               <div className="lg:ml-10 2xl:ml-12 lg:w-[13rem] min-w-[6rem] lg:min-w-[13rem] ">
                 <EpisodeCountdown
-                  animeData={animeData}
+                  animeData={fallbackAnimeData}
                   selectedDate={selectedDate}
                 />
-                <DetailsSidebar animeData={animeData} />
+                <DetailsSidebar animeData={fallbackAnimeData} />
               </div>
               <div className="mx-4 lg:mx-10">
-                <SynopsisDetails animeData={animeData} />
+                <SynopsisDetails animeData={fallbackAnimeData} />
                 <CharacterDetails
-                  animeData={animeData}
-                  characters={characters}
+                  animeData={fallbackAnimeData}
+                  characters={fallbackAnimeCharacters}
                 />
-                <TrailerDetails animeData={animeData} />
-                <RecommendationDetails recommendations={recommendations} />
+                <TrailerDetails animeData={fallbackAnimeData} />
+                <RecommendationDetails
+                  recommendations={fallbackRecommendationData}
+                />
               </div>
             </div>
           </div>
@@ -74,31 +78,27 @@ const SingleAnime = ({
 };
 
 export default SingleAnime;
-export const getServerSideProps = async (context: any) => {
-  console.log(context.params);
-  const animeRes = await fetch(
-    `https://api.jikan.moe/v4/anime/${context.params.slug[0]}/full`
+export const getStaticProps: GetStaticProps = async (context) => {
+  if (!context.params?.slug || typeof context.params.slug[0] !== "string") {
+    throw new Error("Initial error");
+  }
+  const params = context.params?.slug[0];
+  const fallbackAnimeData = await fetcher(
+    `${process.env.ANIME_BASE_URL}/anime/${params}/full`
   );
-  const animeData = await animeRes.json();
 
-  const animeCharactersRes = await fetch(
-    `https://api.jikan.moe/v4/anime/${context.params.slug[0]}/characters`
+  const animeCharactersData = await fetcher(
+    `${process.env.ANIME_BASE_URL}/anime/${params}/characters`
   );
-  const animeCharactersData = await animeCharactersRes.json();
+
   const animeCharactersSorted = sortByFavorites(
     animeCharactersData.data.filter(
       (character: any) => character.role === "Main"
     )
   ).slice(0, 8);
-  const genreRes = await fetch(`http://193.123.33.166/genres`);
-  const genreData = await genreRes.json();
-  const mappedGenre = genreData.map((item: any) => ({
-    ...item,
-    state: "neutral",
-  }));
 
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer bjztMXATp7mFeo7xWGgVroi8b3FfiI");
+  myHeaders.append("Authorization", `Bearer ${process.env.BEARER_TOKEN}`);
   const requestOptions: any = {
     method: "GET",
     headers: myHeaders,
@@ -109,19 +109,24 @@ export const getServerSideProps = async (context: any) => {
     requestOptions
   );
   const calendarData = await calendarRes.json();
-  const recommendationRes = await fetch(
-    `https://api.jikan.moe/v4/anime/${context.params.slug[0]}/recommendations`
-  );
-  const recommendationData = await recommendationRes.json();
 
+  const fallbackRecommendationData = await fetcher(
+    `${process.env.ANIME_BASE_URL}/anime/${params}/recommendations`
+  );
+
+  console.log(`${process.env.ANIME_BASE_URL}/anime/${params}/recommendations`);
   return {
     props: {
-      animeData,
-      mappedGenre,
-      characters: animeCharactersSorted,
+      fallbackAnimeData,
+
+      fallbackAnimeCharacters: animeCharactersSorted,
       calendar: calendarData,
-      recommendations: recommendationData.data.slice(0, 6),
+      fallbackRecommendationData: fallbackRecommendationData.data,
       params: context.params,
     },
   };
+};
+
+export const getStaticPaths = () => {
+  return { paths: [], fallback: "blocking" };
 };

@@ -66,7 +66,7 @@ const AnimeCard = ({
                 Members:{" "}
               </span>
               <span className="text-gray-600 font-medium text-sm dark:text-gray-300">
-                {members}
+                {members.toLocaleString("de-DE")}
               </span>
             </div>
 
