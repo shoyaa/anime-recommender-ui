@@ -40,7 +40,8 @@ const SearchSuggestions = ({
         dropdownState ? "block" : "hidden"
       } animate-in fade-in  absolute top-14 z-50 w-64 bg-white border-2 rounded-lg py-2 px-2`}
     >
-      {isLoading && [...Array(5).keys()].map((item) => <SearchSkeleton />)}
+      {isLoading &&
+        [...Array(5).keys()].map((item) => <SearchSkeleton key={item} />)}
       {error && "Failed to load"}
       {data?.data.length === 0 && "Nothing found."}
 
