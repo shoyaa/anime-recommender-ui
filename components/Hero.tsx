@@ -1,7 +1,6 @@
 import Image from "next/image";
-import React, { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import AdvancedFilter from "./AdvancedFilter/AdvancedFilter";
+import React from "react";
+
 const Hero = () => {
   return (
     <div className="max-w-full  h-[55vh] relative rounded-lg mx-2 md:mx-10 select-none ">
