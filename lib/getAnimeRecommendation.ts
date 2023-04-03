@@ -8,7 +8,7 @@ export const getAnimeRecommendation = async (context: any) => {
     ? `genres_exclude=${searchParams.exclude}`
     : "";
   const status = searchParams.status ? `&status=${searchParams.status}` : "";
-  const type = searchParams.type ? `type=${searchParams.type}` : "";
+  const type = searchParams.type ? `type=${searchParams.type}&` : "";
 
   //Get every params from the url to make query to api.
   const query = `${process.env.ANIME_BASE_URL}/anime?${include}&${exclude}${status}&${type}order_by=members&sort=desc`;
