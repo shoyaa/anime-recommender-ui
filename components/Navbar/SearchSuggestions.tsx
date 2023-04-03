@@ -17,7 +17,7 @@ const SearchSuggestions = ({
 
   const { data, error, isLoading } = useSWR(
     debouncedValue
-      ? `https://api.jikan.moe/v4/anime?q=${debouncedValue}&sfw`
+      ? `${process.env.NEXT_PUBLIC_ANIME_BASE_URL}/anime?q=${debouncedValue}&sfw`
       : null,
     fetcher
   );
@@ -51,7 +51,10 @@ const SearchSuggestions = ({
           )
           .slice(0, 6)
           .map((item: any) => (
-            <Link href={`/anime/${item.mal_id}/${slugify(item.title)}`}>
+            <Link
+              key={item.mal_id}
+              href={`/anime/${item.mal_id}/${slugify(item.title)}`}
+            >
               <div
                 className="py-1 border-b flex items-center hover:bg-gray-100  "
                 key={item.mal_id}

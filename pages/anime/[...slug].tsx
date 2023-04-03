@@ -31,8 +31,8 @@ const SingleAnime = ({
 
     if (params.slug.length <= 1) {
       router.push(
-        `/anime/${fallbackAnimeData.data.mal_id}/${slugify(
-          fallbackAnimeData.data.title
+        `/anime/${fallbackAnimeData?.data.mal_id}/${slugify(
+          fallbackAnimeData?.data.title
         )}`,
         undefined,
         { shallow: true }

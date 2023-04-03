@@ -62,7 +62,7 @@ const Genre = ({ genre }: GenresProps) => {
       default:
         break;
     }
-  }, []);
+  }, [dispatch, genre.mal_id, status]);
   //Check if there is a changes on genreList data on FilterContainer
   useEffect(() => {
     setStatus(genre.state);
