@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <div className="dark:bg-[#161e28] transition-all duration-300 ease-out sm:flex min-h-max md:sticky   w-full fixed  bottom-0 justify-between md:top-5 md:min-h-screen md:w-64 z-50 bg-gray-100">
-      <div className="flex  md:flex-col md:fixed md:pl-7 h-full w-full md:w-max  ">
+      <div className="flex  md:flex-col  md:px-7 h-full w-full md:w-max  ">
         <Link href="/">
           <div className="pt-5">
             <span className="font-extrabold text-2xl hidden md:inline-block">

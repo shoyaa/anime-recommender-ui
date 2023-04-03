@@ -16,9 +16,9 @@ const CalendarTab = () => {
           } flex items-center hover:bg-gray-300 dark:hover:bg-gray-900  w-max py-2 md:pl-2 p-2 md:pr-6 rounded-full cursor-pointer`}
         >
           {router.pathname.includes("calendar") ? (
-            <CalendarIconFilled className="h-9 w-9 md:h-6 md:w-6 md:mr-1" />
+            <CalendarIconFilled className="h-7 w-7 md:h-6 md:w-6 md:mr-1" />
           ) : (
-            <CalendarIcon className="h-9 w-9 md:h-6 md:w-6 md:mr-1" />
+            <CalendarIcon className="h-7 w-7 md:h-6 md:w-6 md:mr-1" />
           )}
           <span className="hidden md:block"> Calendar</span>
         </div>

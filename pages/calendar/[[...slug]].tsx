@@ -7,6 +7,8 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { getDaysInWeek, getWeekNumber } from "../../lib/getWeekNumber";
 import Head from "next/head";
+import { getAnimeSchedule } from "../../lib/getAnimeSchedule";
+import { genres } from "../../lib/constants/genres";
 const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
   const animeByDayOfWeek: any = [
     { day: "Monday", data: [], currentDay: [], isToday: false },
@@ -17,7 +19,7 @@ const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
     { day: "Saturday", data: [], currentDay: [], isToday: false },
     { day: "Sunday", data: [], currentDay: [], isToday: false },
   ];
-  const dates: string[] = [];
+
   const today = new Date().toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -67,7 +69,7 @@ const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
       <Head>
         <title>Anime Calendar | Anime Recommender</title>
       </Head>
-      <Layout data={mappedGenre}>
+      <Layout data={genres}>
         <div className=" w-full px-10 mx-auto pt-5 min-h-screen">
           <div>
             <div className="flex items-center">
@@ -153,32 +155,20 @@ const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   //Get genre names and add them the state "neutral" for filtering.
-  const genreRes = await fetch(`http://193.123.33.166/genres`);
+  /* const genreRes = await fetch(`http://193.123.33.166/genres`);
   const genreData = await genreRes.json();
   const mappedGenre = genreData.map((item: any) => ({
     ...item,
     state: "neutral",
   }));
-
+*/
   const search = context.query.slug?.toString();
   const searchParams = new Proxy(new URLSearchParams(search), {
     get: (params: any, prop: string) => params.get(prop),
   });
   const weekQuery = searchParams.week;
   //Anime schedule API authorization.
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer bjztMXATp7mFeo7xWGgVroi8b3FfiI");
-  const requestOptions: any = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  };
-  const res = await fetch(
-    `https://animeschedule.net/api/v3/timetables/sub?week=${weekQuery}`,
-    requestOptions
-  );
-
-  const data = await res.json();
+  const data = await getAnimeSchedule(weekQuery);
   if (!data) {
     return {
       redirect: {
@@ -198,7 +188,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       data,
-      mappedGenre,
+      //  mappedGenre,
       weekQuery,
     },
   };

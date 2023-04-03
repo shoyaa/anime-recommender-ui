@@ -20,7 +20,7 @@ export default function LoginButton() {
           }}
           className={`flex items-center hover:bg-gray-300 dark:hover:bg-gray-900  w-max py-2 md:pl-2 p-2 md:pr-6 rounded-full cursor-pointer`}
         >
-          <UserCircleIcon className="h-9 w-9 md:h-6 md:w-6 md:mr-1" />
+          <UserCircleIcon className="h-7 w-7 md:h-6 md:w-6 md:mr-1" />
           <span className="hidden md:block"> Login</span>
         </div>
       )}
@@ -34,8 +34,8 @@ export default function LoginButton() {
         >
           {session.user.image && (
             <Image
-              width={24}
-              height={24}
+              width={28}
+              height={28}
               src={session.user.image}
               alt="user image"
               className="rounded-full mr-1 object-cover"

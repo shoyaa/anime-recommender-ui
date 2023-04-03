@@ -80,7 +80,7 @@ const FilterGenre = ({
 
   return (
     <div
-      className={` py-2 border dark:border-gray-700 px-2  mb-3 select-none dark:bg-gray-700`}
+      className={` py-2 border dark:border-gray-700 px-2  mb-3 select-none dark:bg-gray-700 text-sm lg:text-base`}
     >
       <div
         onClick={() => handleClick(1)}

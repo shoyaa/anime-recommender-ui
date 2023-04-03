@@ -4,7 +4,11 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   images: {
-    domains: ["cdn.myanimelist.net", "lh3.googleusercontent.com"],
+    domains: [
+      "cdn.myanimelist.net",
+      "lh3.googleusercontent.com",
+      "img.youtube.com",
+    ],
   },
   async redirects() {
     return [

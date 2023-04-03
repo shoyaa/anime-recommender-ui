@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import React from "react";
-import { animeType } from "../../constants";
+import { animeType } from "../../lib/constants";
 
 const FilterType = ({ active, handleClick, setTypeQuery, typeQuery }: any) => {
   const handleOptionChange = (event: any) => {
@@ -8,7 +8,7 @@ const FilterType = ({ active, handleClick, setTypeQuery, typeQuery }: any) => {
   };
   return (
     <div
-      className={` py-2 border dark:border-gray-700 px-2  mb-3 select-none dark:bg-gray-700`}
+      className={` py-2 border dark:border-gray-700 px-2  mb-3 select-none dark:bg-gray-700 text-sm lg:text-base`}
     >
       <div
         onClick={() => handleClick(2)}

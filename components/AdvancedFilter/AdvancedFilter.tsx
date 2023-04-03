@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { animeStatus, animeType } from "../../constants";
+import { animeStatus, animeType } from "../../lib/constants";
 import FilterGenre from "./FilterGenre";
 import FilterStatus from "./FilterStatus";
 import FilterType from "./FilterType";
@@ -57,7 +57,7 @@ const AdvancedFilter = ({ data, include, exclude }: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="px-5 py-5 dark:bg-gray-800 bg-white rounded-lg border-2 border-fuchsia-900 z-50 shadow-xl w-96 select-none ">
+    <div className="p-3 lg:p-5 dark:bg-gray-800 bg-white rounded-lg border-2 border-fuchsia-900 z-50 shadow-xl w-max  md:w-96 select-none ">
       <div className="ml-2 mb-3">
         <h2 className=" text-md font-bold text-gray-600">Advanced Search</h2>
       </div>

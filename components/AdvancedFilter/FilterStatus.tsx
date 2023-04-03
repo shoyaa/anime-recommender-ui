@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import React from "react";
-import { animeStatus } from "../../constants";
+import { animeStatus } from "../../lib/constants";
 
 const FilterStatus = ({
   active,
@@ -14,7 +14,7 @@ const FilterStatus = ({
 
   return (
     <div
-      className={`py-2 border dark:border-gray-700 px-2  mb-3 select-none dark:bg-gray-700`}
+      className={`py-2 border dark:border-gray-700 px-2  mb-3 select-none dark:bg-gray-700 text-sm lg:text-base`}
     >
       <div
         onClick={() => handleClick(3)}

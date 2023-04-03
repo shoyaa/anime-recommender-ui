@@ -12,12 +12,15 @@ export const sortArray = (array: any) => {
 };
 
 export const sortByFavorites = (array: any) => {
+  if (!array) {
+    return;
+  }
   const sortedArray = array.sort(function (a: any, b: any) {
     if (a.favorites < b.favorites) {
-      return -1;
+      return 1;
     }
     if (a.favorites > b.favorites) {
-      return 1;
+      return -1;
     }
     return 0;
   });
