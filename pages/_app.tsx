@@ -6,7 +6,8 @@ import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import store from "../store";
-//TEST
+import NextNProgress from "nextjs-progressbar";
+
 const montserrat = Montserrat({
   subsets: ["latin"],
 
@@ -20,6 +21,7 @@ export default function App({
 }: AppProps<{ session: Session }>) {
   return (
     <ThemeProvider attribute="class">
+      <NextNProgress color="#0ea5e9" />
       <SessionProvider session={session}>
         <Provider store={store}>
           <main className={`${montserrat.variable} font-sans`}>
