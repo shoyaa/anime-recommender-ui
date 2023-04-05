@@ -1,15 +1,22 @@
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import Layout from "../../components/Layout";
+import Head from "next/head";
+
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { convertDate } from "../../lib/convertDate";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { getDaysInWeek, getWeekNumber } from "../../lib/getWeekNumber";
-import Head from "next/head";
 import { getAnimeSchedule } from "../../lib/getAnimeSchedule";
 import { genres } from "../../lib/constants/genres";
-const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
+
+const Calendar = ({
+  data,
+  isNextWeekExists,
+  isPreviousWeekExists,
+  weekQuery,
+}: any) => {
   const animeByDayOfWeek: any = [
     { day: "Monday", data: [], currentDay: [], isToday: false },
     { day: "Tuesday", data: [], currentDay: [], isToday: false },
@@ -27,19 +34,11 @@ const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
   const router = useRouter();
   const handlePreviousClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (weekQuery >= 2) {
-      router.push(`/calendar/week=${weekQuery - 1}`);
-    } else {
-      return;
-    }
+    router.push(`/calendar/week=${weekQuery - 1}`);
   };
   const handleNextClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (weekQuery <= 9) {
-      router.push(`/calendar/week=${Number(weekQuery) + 1}`);
-    } else {
-      return;
-    }
+    router.push(`/calendar/week=${Number(weekQuery) + 1}`);
   };
   //Store the fetched data inside animeByDayOfWeek array. I am doing this to seperate
   //  data in their own days such as Mondays, Tuesdays etc..
@@ -64,6 +63,7 @@ const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
 
   //Get Number of days and store them in dates array. Example: 13 February 14 February etc..
   const daysInWeek = getDaysInWeek(weekQuery, 2023);
+
   return (
     <>
       <Head>
@@ -75,22 +75,18 @@ const Calendar = ({ data, mappedGenre, weekQuery }: any) => {
             <div className="flex items-center">
               <h1 className="font-extrabold text-3xl mr-2">Winter 2023</h1>{" "}
               <button
-                className="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-900 transition-all duration-100 ease-out"
-                disabled={weekQuery === 1}
+                className="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-900 transition-all duration-100 ease-out disabled:text-gray-300"
+                disabled={!isPreviousWeekExists || weekQuery === "0"}
                 onClick={handlePreviousClick}
               >
-                <ChevronLeftIcon
-                  className={`h-6 w-6 ${
-                    weekQuery === 1 ? "stroke-black" : ""
-                  } `}
-                />
+                <ChevronLeftIcon className={`h-6 w-6 `} />
               </button>
               <button
-                className="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-900 transition-all duration-100 ease-out"
-                disabled={weekQuery === 10}
+                className="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-900 transition-all duration-100 ease-out disabled:text-gray-300 "
+                disabled={!isNextWeekExists}
                 onClick={handleNextClick}
               >
-                <ChevronRightIcon className="h-6 w-6" />
+                <ChevronRightIcon className="h-6 w-6  " />
               </button>
             </div>
             <p className=" lg:w-1/3 leading-7">
@@ -172,23 +168,33 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!data) {
     return {
       redirect: {
-        destination: "/calendar",
+        destination: `/calendar/week=${getWeekNumber()}`,
         permanent: false,
       },
     };
   }
-  if (weekQuery >= 11 || weekQuery <= 0) {
+
+  const checkNextWeek = await getAnimeSchedule(
+    (parseInt(weekQuery) + 1).toString()
+  );
+  const checkPreviousWeek = await getAnimeSchedule(
+    (parseInt(weekQuery) - 1).toString()
+  );
+  const isNextWeekExists = !!checkNextWeek;
+  const isPreviousWeekExists = !!checkPreviousWeek;
+  /* if (weekQuery >= 11 || weekQuery <= 0) {
     return {
       redirect: {
         destination: `/calendar/week=${getWeekNumber()}`,
         permanent: false,
       },
     };
-  }
+  } */
   return {
     props: {
       data,
-      //  mappedGenre,
+      isNextWeekExists,
+      isPreviousWeekExists,
       weekQuery,
     },
   };
