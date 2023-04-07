@@ -19,7 +19,6 @@ export default function Home({ fallbackPopularAnimes }: any) {
       if (keyArray.join("") === "zigidigidum") {
         setParty(true);
       }
-      console.log(keyArray.join(""));
     };
     document.addEventListener("keydown", detectKeyDown);
   }, []);
