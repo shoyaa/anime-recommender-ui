@@ -114,7 +114,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     `${process.env.ANIME_BASE_URL}/anime/${params}/recommendations`
   );
 
-  console.log(`${process.env.ANIME_BASE_URL}/anime/${params}/recommendations`);
   return {
     props: {
       fallbackAnimeData,

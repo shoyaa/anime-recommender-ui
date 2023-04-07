@@ -6,13 +6,6 @@ import fetcher from "../lib/fetcher";
 import AnimeLikeBtn from "../components/AnimeLikeBtn";
 
 export default function Home({ fallbackPopularAnimes }: any) {
-  if (typeof window !== "undefined") {
-    // Perform localStorage action
-    localStorage.setItem("anime", "boku no pico");
-    console.log("aaaa");
-    const item = localStorage.getItem("anime");
-    console.log(item);
-  }
   return (
     <>
       <Layout>

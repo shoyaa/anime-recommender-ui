@@ -27,7 +27,7 @@ const FilterContainer = ({ genres }: any) => {
       selectedStatus !== "All" ? `&status=${selectedStatus}` : "";
     const includedQuery = includedGenres ? includedGenres : "";
     const excludedQuery = excludedGenres ? excludedGenres : "";
-    console.log(includedQuery + excludedQuery + typeQuery + statusQuery);
+
     router.push(
       `/category/include=${includedQuery}&exclude=${excludedQuery}${typeQuery}${statusQuery}`
     );

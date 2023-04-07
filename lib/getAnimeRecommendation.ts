@@ -15,6 +15,6 @@ export const getAnimeRecommendation = async (context: any) => {
 
   const req = await fetch(query);
   const recommendationData = await req.json();
-  console.log("QUERY IS " + query);
+
   return recommendationData;
 };

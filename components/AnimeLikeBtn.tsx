@@ -14,13 +14,12 @@ const AnimeLikeBtn = ({ mal_id }: { mal_id: number }) => {
 
   async function toggleButton() {
     if (likedAnimes?.some((anime) => anime.id === mal_id)) {
-      console.log("if block");
       try {
         await db.liked.delete(mal_id).then(() => setIsLiked(false));
       } catch (err) {}
       return;
     }
-    console.log("else block");
+
     try {
       // Add the new friend!
       const id = await db.liked.add({

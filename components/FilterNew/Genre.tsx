@@ -50,7 +50,6 @@ const Genre = ({ genre }: GenresProps) => {
   };
   // Use the useEffect hook to update the Redux store when the component mounts, if the genre is already included/excluded.
   useEffect(() => {
-    console.log("çalıştı");
     switch (status) {
       case "included":
         dispatch(addIncluded(genre.mal_id));

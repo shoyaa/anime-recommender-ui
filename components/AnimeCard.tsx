@@ -34,7 +34,6 @@ const AnimeCard = ({
   };
 
   const statusBg = statusBgs[status] || "bg-gray-700";
-  console.log(title, mal_id);
   return (
     <div
       className={`border-4 dark:border-gray-900 ${statusBg} rounded-lg grid grid-cols-[100px,auto] md:grid-cols-[185px,auto] h-[265px] min-w-full dark:bg-gray-700  bg-gray-50  overflow-hidden  shadow-lg `}
