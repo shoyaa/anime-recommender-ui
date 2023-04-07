@@ -1,7 +1,15 @@
 import { Table } from "dexie";
 
 export type Liked = {
-  id?: number;
+  id: number;
+  title: string;
+  image: string;
+  members: number;
+  genres: string[];
+  synopsis: string;
+  status: string;
+  episodes: number;
+  mal_id: number;
   isLiked: boolean;
 };
 

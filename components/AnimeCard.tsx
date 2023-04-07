@@ -59,7 +59,16 @@ const AnimeCard = ({
       <div className="grid grid-cols-[100%]">
         <div className="pl-4 pt-4 max-h-[261px] scrollbar-thumb-gray-800 scrollbar-track-gray-300 scrollbar-thin overflow-auto  ">
           <div className="flex justify-end pr-5 mb-2 w-full">
-            <AnimeLikeBtn mal_id={mal_id} />
+            <AnimeLikeBtn
+              title={title}
+              image={image}
+              members={members}
+              genres={genres}
+              synopsis={synopsis}
+              status={status}
+              episodes={episodes}
+              mal_id={mal_id}
+            />
           </div>
           <h1 className="font-extrabold text-gray-800 dark:text-gray-300 pr-5 line-clamp-2">
             {title}
