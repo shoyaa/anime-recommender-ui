@@ -31,7 +31,7 @@ const TrendingAnimes = ({ fallbackPopularAnimes }: any) => {
   };
 
   const { data: popularAnimes } = useSWR<PopularAnimes>(
-    `${process.env.ANIME_BASE_URL}/top/anime?filter=airing&page=1`,
+    `${process.env.NEXT_PUBLIC_ANIME_BASE_URL}/top/anime?filter=airing&page=1`,
     fetcher,
     { fallbackData: fallbackPopularAnimes }
   );
