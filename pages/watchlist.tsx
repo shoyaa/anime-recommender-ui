@@ -44,7 +44,7 @@ const WatchList = () => {
             })}
             {animeList.length === 0 && (
               <div>
-                <h3>Add some animes -_-"</h3>
+                <h3>Add some animes -_-&ldquo;</h3>
               </div>
             )}
           </div>
