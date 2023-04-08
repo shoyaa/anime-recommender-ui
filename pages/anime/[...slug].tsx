@@ -79,51 +79,60 @@ const SingleAnime = ({
 
 export default SingleAnime;
 export const getStaticProps: GetStaticProps = async (context) => {
-  if (!context.params?.slug || typeof context.params.slug[0] !== "string") {
-    throw new Error("Initial error");
+  try {
+    if (!context.params?.slug || typeof context.params.slug[0] !== "string") {
+      throw new Error("Initial error");
+    }
+    const params = context.params?.slug[0];
+    const fallbackAnimeData = await fetcher(
+      `${process.env.ANIME_BASE_URL}/anime/${params}/full`
+    );
+
+    const animeCharactersData = await fetcher(
+      `${process.env.ANIME_BASE_URL}/anime/${params}/characters`
+    );
+
+    const animeCharactersSorted = sortByFavorites(
+      animeCharactersData.data.filter(
+        (character: any) => character.role === "Main"
+      )
+    ).slice(0, 8);
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${process.env.BEARER_TOKEN}`);
+    const requestOptions: any = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    const calendarRes = await fetch(
+      `https://animeschedule.net/api/v3/timetables/sub`,
+      requestOptions
+    );
+    const calendarData = await calendarRes.json();
+
+    const fallbackRecommendationData = await fetcher(
+      `${process.env.ANIME_BASE_URL}/anime/${params}/recommendations`
+    );
+
+    return {
+      props: {
+        fallbackAnimeData,
+
+        fallbackAnimeCharacters: animeCharactersSorted,
+        calendar: calendarData,
+        fallbackRecommendationData: fallbackRecommendationData.data,
+        params: context.params,
+      },
+    };
+  } catch (err) {
+    return {
+      redirect: {
+        destination: "/toomanyrequests",
+        permanent: false,
+      },
+    };
   }
-  const params = context.params?.slug[0];
-  const fallbackAnimeData = await fetcher(
-    `${process.env.ANIME_BASE_URL}/anime/${params}/full`
-  );
-
-  const animeCharactersData = await fetcher(
-    `${process.env.ANIME_BASE_URL}/anime/${params}/characters`
-  );
-
-  const animeCharactersSorted = sortByFavorites(
-    animeCharactersData.data.filter(
-      (character: any) => character.role === "Main"
-    )
-  ).slice(0, 8);
-
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${process.env.BEARER_TOKEN}`);
-  const requestOptions: any = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  };
-  const calendarRes = await fetch(
-    `https://animeschedule.net/api/v3/timetables/sub`,
-    requestOptions
-  );
-  const calendarData = await calendarRes.json();
-
-  const fallbackRecommendationData = await fetcher(
-    `${process.env.ANIME_BASE_URL}/anime/${params}/recommendations`
-  );
-
-  return {
-    props: {
-      fallbackAnimeData,
-
-      fallbackAnimeCharacters: animeCharactersSorted,
-      calendar: calendarData,
-      fallbackRecommendationData: fallbackRecommendationData.data,
-      params: context.params,
-    },
-  };
 };
 
 export const getStaticPaths = () => {
