@@ -46,9 +46,9 @@ const AnimeCard = ({
               fill
               src={image}
               className="object-cover h-full w-full rounded-l-md"
-              sizes="(max-width: 768px) 50vw,
-              (max-width: 1200px) 5vw,
-              5vw"
+              sizes="(min-width: 66em) 33vw,
+              (min-width: 44em) 33vw,
+              15vw"
             />
             <div
               className={`relative bg-gradient-to-t from-indigo-500  flex items-end pb-1 w-full h-1/2 lg:h-1/3 pl-2  md:pl-5 dark:text-gray-300 text-white  `}
@@ -58,7 +58,7 @@ const AnimeCard = ({
           </div>
         </Link>
       </div>
-      <div className="grid grid-cols-[100%]">
+      <div className="grid grid-cols-[100%] lg:hidden xl:grid">
         <div className="pl-4 pt-4 max-h-[261px] scrollbar-thumb-gray-800 scrollbar-track-gray-300 scrollbar-thin overflow-auto  ">
           <div className="flex justify-end pr-5 mb-2 w-full">
             <AnimeLikeBtn

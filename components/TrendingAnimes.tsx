@@ -44,7 +44,7 @@ const TrendingAnimes = ({ fallbackPopularAnimes }: any) => {
         </h1>
       </div>
       <div className="flex gap-x-10 w-full">
-        <div className="grid md:gap-x-16 gap-y-8 grid-rows-auto-fill grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
+        <div className="grid md:gap-x-16 gap-y-8 grid-rows-auto-fill grid-cols-1 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3">
           {popularAnimes?.data?.slice(0, 12).map((anime: Anime) => {
             const genres = anime.genres.map((genre) => genre.name);
             return (
