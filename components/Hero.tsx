@@ -11,6 +11,9 @@ const Hero = () => {
           fill
           src="/assets/wallhaven-y851p7.jpg"
           className="object-cover brightness-75 rounded-lg "
+          sizes="(min-width: 66em) 100vw,
+          (min-width: 44em) 33vw,
+          70vw"
         />
       </div>
     </div>
