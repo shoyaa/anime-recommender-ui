@@ -15,6 +15,7 @@ type AnimeCardProps = {
   status: string;
   episodes: number;
   mal_id: number;
+  priority: boolean;
 };
 
 const AnimeCard = ({
@@ -26,6 +27,7 @@ const AnimeCard = ({
   status,
   episodes,
   mal_id,
+  priority,
 }: AnimeCardProps) => {
   const statusBgs: any = {
     "Currently Airing": "from-[#B5179E]",
@@ -34,6 +36,7 @@ const AnimeCard = ({
   };
 
   const statusBg = statusBgs[status] || "bg-gray-700";
+  console.log(priority);
   return (
     <div
       className={`border-4 dark:border-gray-900 ${statusBg} rounded-lg grid grid-cols-[100px,auto] md:grid-cols-[185px,auto] h-[265px] min-w-full dark:bg-gray-700  bg-gray-50  overflow-hidden  shadow-lg `}
@@ -43,6 +46,7 @@ const AnimeCard = ({
           <div className=" relative  border dark:border-gray-900  bg-gray-50 overflow-hidden  h-full w-full flex items-end ">
             <Image
               alt={title}
+              priority={priority ? true : false}
               fill
               src={image}
               className="object-cover h-full w-full rounded-l-md"

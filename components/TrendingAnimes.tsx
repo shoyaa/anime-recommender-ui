@@ -45,7 +45,7 @@ const TrendingAnimes = ({ fallbackPopularAnimes }: any) => {
       </div>
       <div className="flex gap-x-10 w-full">
         <div className="grid md:gap-x-16 gap-y-8 grid-rows-auto-fill grid-cols-1 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3">
-          {popularAnimes?.data?.slice(0, 12).map((anime: Anime) => {
+          {popularAnimes?.data?.slice(0, 12).map((anime: Anime, index) => {
             const genres = anime.genres.map((genre) => genre.name);
             return (
               <AnimeCard
@@ -58,6 +58,7 @@ const TrendingAnimes = ({ fallbackPopularAnimes }: any) => {
                 status={anime.status}
                 episodes={anime.episodes}
                 mal_id={anime.mal_id}
+                priority={index === 0 ? true : false}
               />
             );
           })}
