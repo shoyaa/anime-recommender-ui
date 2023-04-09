@@ -39,6 +39,7 @@ const WatchList = () => {
                   synopsis={anime.synopsis}
                   status={anime.status}
                   episodes={anime.episodes}
+                  priority={false}
                 />
               );
             })}
