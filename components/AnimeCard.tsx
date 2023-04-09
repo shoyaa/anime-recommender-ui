@@ -104,7 +104,7 @@ const AnimeCard = ({
               );
             })}
           </div>
-          <div className="text-[14px] font-medium leading-tight  tracking-wide pr-4 text-gray-400">
+          <div className="text-[14px] font-medium leading-tight  tracking-wide pr-4 text-gray-600">
             {synopsis || "No description found."}
           </div>
         </div>

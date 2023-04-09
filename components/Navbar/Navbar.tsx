@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <div className="dark:bg-[#161e28] transition-all duration-300 ease-out sm:flex min-h-max md:sticky z-10   w-full fixed  bottom-0 justify-between md:top-5 md:min-h-screen md:w-64  bg-gray-100">
       <div className="flex  md:flex-col  md:px-7 h-full w-full md:w-max  ">
-        <Link href="/">
+        <Link aria-label="go to home" href="/">
           <div className="pt-5">
             <span className="font-extrabold text-2xl hidden md:inline-block">
               ANIME
@@ -30,7 +30,7 @@ const Navbar = () => {
           </div>
         </Link>
         <div className="md:mt-8 w-full md:w-max">
-          <span className="font-extrabold pl-2 text-xs hidden md:block text-gray-500">
+          <span className="font-extrabold pl-2 text-xs hidden md:block text-gray-700">
             MENU
           </span>
           <ul className="font-base flex justify-around items-center md:flex-col md:items-start  text-xl md:space-y-2">

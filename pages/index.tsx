@@ -6,6 +6,7 @@ import fetcher from "../lib/fetcher";
 import AnimeLikeBtn from "../components/AnimeLikeBtn";
 import { useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
+import { GetStaticProps } from "next";
 
 export default function Home({ fallbackPopularAnimes }: any) {
   const [party, setParty] = useState(false);
@@ -40,7 +41,7 @@ export default function Home({ fallbackPopularAnimes }: any) {
   );
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const fallbackPopularAnimes = await fetcher(
     `${process.env.ANIME_BASE_URL}/top/anime?filter=airing&page=1`
   );
@@ -48,4 +49,4 @@ export async function getStaticProps() {
   return {
     props: { fallbackPopularAnimes }, // will be passed to the page component as props
   };
-}
+};
