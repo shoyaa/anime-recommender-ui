@@ -51,6 +51,7 @@ const Category = ({ anime, genreList }: any) => {
                       status={anime.status}
                       episodes={anime.episodes}
                       mal_id={anime.mal_id}
+                      priority={false}
                     />
                   );
                 })
