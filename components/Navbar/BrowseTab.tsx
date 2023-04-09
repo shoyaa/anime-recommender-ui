@@ -8,7 +8,10 @@ const BrowseTab = () => {
   const router = useRouter();
   return (
     <li>
-      <Link href="/category/include=&exclude=&page=1">
+      <Link
+        aria-label="Explore more animes"
+        href="/category/include=&exclude=&page=1"
+      >
         <div
           className={`${
             router.pathname.includes("category") ? "font-extrabold" : ""

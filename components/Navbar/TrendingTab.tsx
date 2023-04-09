@@ -7,7 +7,7 @@ const TrendingTab = () => {
   const router = useRouter();
   return (
     <li>
-      <Link href="/">
+      <Link aria-label="explore trending animes" href="/">
         <div
           className={`${
             router.pathname === "/" ? "font-extrabold" : ""

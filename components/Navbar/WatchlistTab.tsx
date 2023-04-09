@@ -8,7 +8,7 @@ const WatchlistTab = () => {
   const router = useRouter();
   return (
     <li>
-      <Link href="/watchlist">
+      <Link aria-label="check your watchlist" href="/watchlist">
         <div
           className={`${
             router.pathname === "/watchlist" ? "font-extrabold" : ""

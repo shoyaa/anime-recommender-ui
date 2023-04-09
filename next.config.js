@@ -8,12 +8,14 @@ const nextConfig = {
     defaultLocale: "en",
   },
   images: {
+    minimumCacheTTL: 60,
     domains: [
       "cdn.myanimelist.net",
       "lh3.googleusercontent.com",
       "img.youtube.com",
     ],
   },
+
   async redirects() {
     return [
       {

@@ -46,9 +46,9 @@ const AnimeCard = ({
               fill
               src={image}
               className="object-cover h-full w-full rounded-l-md"
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
+              sizes="(max-width: 768px) 50vw,
+              (max-width: 1200px) 5vw,
+              5vw"
             />
             <div
               className={`relative bg-gradient-to-t from-indigo-500  flex items-end pb-1 w-full h-1/2 lg:h-1/3 pl-2  md:pl-5 dark:text-gray-300 text-white  `}

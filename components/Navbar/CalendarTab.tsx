@@ -9,7 +9,10 @@ const CalendarTab = () => {
   const router = useRouter();
   return (
     <li>
-      <Link href={`/calendar/week=${getWeekNumber()}`}>
+      <Link
+        aria-label="explore anime calendar"
+        href={`/calendar/week=${getWeekNumber()}`}
+      >
         <div
           className={`${
             router.pathname.includes("calendar") ? "font-extrabold" : ""
