@@ -15,13 +15,16 @@ const HeaderDetails = ({ animeData }: any) => {
       </div>
       <div className="ml-3 lg:ml-12 text-white">
         <div className="lg:h-[15.5rem]">
-          <h3 className="text-2xl lg:text-7xl mb-3 font-extrabold drop-shadow-lg ">
+          <h3 className="text-2xl lg:text-3xl 2xl:text-7xl mb-3 font-extrabold drop-shadow-lg ">
             {animeData.data.title}
           </h3>
           <h4>{animeData.data.title_japanese}</h4>
         </div>
         <div className="flex items-center lg:space-x-3">
-          <button className="mt-2 px-2 py-1 border-2 border-gray-500 text-gray-700 rounded-full lg:mt-0 bg-white lg:px-6 lg:py-2 text-sm transition-colors duration-300 lg:border-2 lg:rounded lg:text-fuchsia-500 lg:border-fuchsia-400 shadow-rose-300/30 hover:bg-fuchsia-500 hover:text-fuchsia-100">
+          <button
+            aria-label="add to watchlist"
+            className="mt-2 px-2 py-1 border-2 border-gray-500 text-gray-700 rounded-full lg:mt-0 bg-white lg:px-6 lg:py-2 text-sm transition-colors duration-300 lg:border-2 lg:rounded lg:text-fuchsia-500 lg:border-fuchsia-400 shadow-rose-300/30 hover:bg-fuchsia-500 hover:text-fuchsia-100"
+          >
             Add to watchlist
           </button>
           <div className="hidden lg:flex items-center px-6 py-2 rounded  bg-blue-100 ">

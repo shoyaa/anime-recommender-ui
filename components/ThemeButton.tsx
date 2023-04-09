@@ -5,6 +5,7 @@ const ThemeButton = () => {
   const { theme, setTheme } = useTheme();
   return (
     <button
+      aria-label="change theme"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       className="flex items-center hover:bg-gray-300 dark:hover:bg-gray-900  w-max py-2 md:pl-2 p-2 md:pr-6 rounded-full cursor-pointer font-base text-xl"
     >

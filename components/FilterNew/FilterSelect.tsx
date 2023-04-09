@@ -19,7 +19,9 @@ const FilterSelect = <T extends string>({
 
   return (
     <div className=" px-3 border border-gray-500 rounded w-max flex items-center ">
-      <button className="dropdown-toggle">{label}</button>
+      <button aria-label="dropdown menu" className="dropdown-toggle">
+        {label}
+      </button>
 
       <select
         value={selectedOption}

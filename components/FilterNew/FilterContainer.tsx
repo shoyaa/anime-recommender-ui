@@ -69,12 +69,14 @@ const FilterContainer = ({ genres }: any) => {
       </GenreContainer>
       <div className="mt-4 font-bold">
         <button
+          aria-label="submit"
           onClick={handleClick}
           className="bg-fuchsia-700 text-white px-3 py-1 rounded mr-4"
         >
           Submit
         </button>
         <button
+          aria-label="clear"
           onClick={handleClear}
           className="bg-white text-gray-900 border border-gray-900 px-3 py-1 rounded"
         >

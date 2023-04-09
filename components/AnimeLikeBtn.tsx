@@ -58,7 +58,7 @@ const AnimeLikeBtn = ({
   }
 
   return (
-    <button onClick={toggleButton}>
+    <button aria-label="like button" onClick={toggleButton}>
       {isLiked ? (
         <HeartIconFilled className="h-5 w-5 fill-pink-500" />
       ) : (

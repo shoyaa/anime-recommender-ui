@@ -69,6 +69,7 @@ const Genre = ({ genre }: GenresProps) => {
 
   return (
     <button
+      aria-label={genre.name}
       onClick={handleClick}
       className={`${borderColor} text-sm border  px-3 py-1 rounded cursor-pointer select-none transition-all duration-300 ease-out`}
       key={genre.mal_id}

@@ -75,6 +75,7 @@ const Calendar = ({
             <div className="flex items-center">
               <h1 className="font-extrabold text-3xl mr-2">Winter 2023</h1>{" "}
               <button
+                aria-label="go to previous date"
                 className="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-900 transition-all duration-100 ease-out disabled:text-gray-300"
                 disabled={!isPreviousWeekExists || weekQuery === "0"}
                 onClick={handlePreviousClick}
@@ -82,6 +83,7 @@ const Calendar = ({
                 <ChevronLeftIcon className={`h-6 w-6 `} />
               </button>
               <button
+                aria-label="go to next date"
                 className="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-900 transition-all duration-100 ease-out disabled:text-gray-300 "
                 disabled={!isNextWeekExists}
                 onClick={handleNextClick}
